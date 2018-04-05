@@ -11,6 +11,9 @@ exports.sourceNodes = async ({
   reporter
 }, {
   url,
+  method,
+  headers,
+  data,
   idField = `id`,
   localSave = false,
   skipCreateNode = false,
@@ -30,7 +33,7 @@ exports.sourceNodes = async ({
   // console.log(`entityType: ${entityType}`);
 
   // Fetch the data
-  let entities = await fetch({url, name, localSave, path, payloadKey, auth, verbose, reporter})
+  let entities = await fetch({url, method, headers, data, name, localSave, path, payloadKey, auth, verbose, reporter})
 
   // If entities is a single object, add to array to prevent issues with creating nodes
   if(entities && !Array.isArray(entities)) {

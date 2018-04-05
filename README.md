@@ -1,4 +1,4 @@
-# gatsby-source-thirdparty
+# gatsby-source-apiserver
 
 A gatsby source plugin for pulling in third party api data.
 
@@ -12,7 +12,7 @@ A gatsby source plugin for pulling in third party api data.
 
 ## Install
 
-`npm install --save gatsby-plugin-thirdparty`
+`npm install --save gatsby-plugin-apiserver`
 
 ## How to use
 
@@ -21,7 +21,7 @@ A gatsby source plugin for pulling in third party api data.
 
 plugins: [
   {
-    resolve: 'gatsby-source-thirdparty',
+    resolve: 'gatsby-source-apiserver',
     options: {
       // The url, this should be the endpoint you are attempting to pull data from
       url: `http://yourapi.com/api/v1/posts`,
@@ -66,7 +66,7 @@ plugins: [
 
 Data will be available at the following points in GraphQL.
 
-`allThirdPartyName` or `thirdPartyName` where `Name` is replaced by the name entered in the
+`allApiServerName` or `apiServerName` where `Name` is replaced by the name entered in the
 configuration options.
 
 ### Conflicting keys
@@ -74,4 +74,4 @@ configuration options.
 Some of the returned keys may be transformed if they conflict with restricted keys used for
 GraphQL such as the following `['id', 'children', 'parent', 'fields', 'internal']`
 
-These conflicting keys will now show up as `thirdParty_id`
+These conflicting keys will now show up as `apiServer_id`

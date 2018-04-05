@@ -7,6 +7,9 @@ const log = console.log
 
 async function fetch({
   url,
+  method,
+  headers,
+  data,
   name,
   localSave,
   path,
@@ -21,8 +24,10 @@ async function fetch({
   // Attempt to download the data from api
   try {
     let options = {
-      method: `get`,
+      method: method,
       url: url,
+      headers: headers,
+      data: data
     }
     if(auth) {
       options.auth = auth
