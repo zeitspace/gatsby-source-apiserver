@@ -14,6 +14,7 @@
     "gatsby-plugin",
     "gatsby-source-plugin"
   ],
+  "author": "Thinh Le <thinh.le@asnet.com.vn>",
   "license": "MIT",
   "repository": {
     "type": "git",
