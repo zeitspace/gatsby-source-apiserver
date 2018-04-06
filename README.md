@@ -12,7 +12,7 @@ A gatsby source plugin for pulling in third party api data.
 
 ## Install
 
-`npm install --save gatsby-plugin-apiserver`
+`npm install --save gatsby-source-apiserver`
 
 ## How to use
 
