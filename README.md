@@ -77,7 +77,7 @@ plugins: [
 
 Data will be available at the following points in GraphQL.
 
-`allApiServerName` or `apiServerName` where `Name` is replaced by the name entered in the
+`allThirdPartyName` or `thirdPartyName` where `Name` is replaced by the name entered in the
 configuration options.
 
 ### Conflicting keys
@@ -85,4 +85,4 @@ configuration options.
 Some of the returned keys may be transformed if they conflict with restricted keys used for
 GraphQL such as the following `['id', 'children', 'parent', 'fields', 'internal']`
 
-These conflicting keys will now show up as `apiServer_id`
+These conflicting keys will now show up as `thirdParty_id`
