@@ -23,6 +23,9 @@ plugins: [
   {
     resolve: 'gatsby-source-apiserver',
     options: {
+      // Type prefix of entities from server
+      typePrefix: 'internal__',
+
       // The url, this should be the endpoint you are attempting to pull data from
       url: `http://yourapi.com/api/v1/posts`,
 
@@ -41,7 +44,7 @@ plugins: [
       // using this name. i.e. posts.json
       name: `posts`,
 
-      // Optional simple authentication
+      // Simple authentication, if optional, set it null
       auth: {
         username: 'myusername',
         password: 'supersecretpassword1234'
@@ -77,7 +80,7 @@ plugins: [
 
 Data will be available at the following points in GraphQL.
 
-`allThirdPartyName` or `thirdPartyName` where `Name` is replaced by the name entered in the
+`all<TypePrefix><Name>` or `<TypePrefix><Name>` where `TypePrefix` and `Name` is replaced by the name entered in the
 configuration options.
 
 ### Conflicting keys
@@ -85,4 +88,4 @@ configuration options.
 Some of the returned keys may be transformed if they conflict with restricted keys used for
 GraphQL such as the following `['id', 'children', 'parent', 'fields', 'internal']`
 
-These conflicting keys will now show up as `thirdParty_id`
+These conflicting keys will now show up as `alternative_id`

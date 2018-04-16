@@ -17,7 +17,7 @@ const digest = str =>
     .digest(`hex`)
 
 // Prefix to use if there is a conflict with key name
-const conflictFieldPrefix = `thirdParty_`
+const conflictFieldPrefix = `alternative_`
 
 // Keys that will conflic with graphql
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]

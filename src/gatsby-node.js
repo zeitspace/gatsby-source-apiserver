@@ -3,13 +3,14 @@ const stringify = require(`json-stringify-safe`)
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 
-const typePrefix = `thirdParty__`
+// const typePrefix = `thirdParty__`
 
 exports.sourceNodes = async ({
   boundActionCreators,
   createNodeId,
   reporter
 }, {
+  typePrefix,
   url,
   method,
   headers,
