@@ -2,6 +2,7 @@ const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
+const objectRef = require(`./helpers`).objectRef
 
 // const typePrefix = `thirdParty__`
 
@@ -22,6 +23,7 @@ exports.sourceNodes = async ({
   auth = {},
   payloadKey,
   name,
+  entityLevel,
   verboseOutput = false
 }) => {
   const { createNode } = boundActionCreators;
@@ -35,6 +37,11 @@ exports.sourceNodes = async ({
 
   // Fetch the data
   let entities = await fetch({url, method, headers, data, name, localSave, path, payloadKey, auth, verbose, reporter})
+
+  // Interpolate entities from nested resposne
+  if (entityLevel) {
+    entities = objectRef(entities, entityLevel)
+  }
 
   // If entities is a single object, add to array to prevent issues with creating nodes
   if(entities && !Array.isArray(entities)) {

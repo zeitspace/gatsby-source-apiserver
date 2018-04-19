@@ -44,6 +44,9 @@ plugins: [
       // using this name. i.e. posts.json
       name: `posts`,
 
+      // Nested level of entities in repsonse object, example: `data.posts`
+      entityLevel: `data.posts`
+
       // Simple authentication, if optional, set it null
       auth: {
         username: 'myusername',
