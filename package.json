@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-apiserver",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Gatsby plugin to handle any third party api data intake.",
   "main": "index.js",
   "scripts": {
