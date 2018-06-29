@@ -45,11 +45,11 @@ async function fetch({
       try {
         fs.writeFileSync(`${path}${name}.json`, stringify(allRoutes.data, null, 2))
       } catch(err) {
-        reporter.panic(`Plugin ThirdParty could not save the file.  Please make sure the folder structure is already in place.`, err)
+        reporter.panic(`Plugin ApiServer could not save the file.  Please make sure the folder structure is already in place.`, err)
       }
 
       if(verbose) {
-        log(chalk`{bgCyan ThirdParty} ${name}.json was saved locally to ${path}`)
+        log(chalk`{bgCyan Plugin ApiServer} ${name}.json was saved locally to ${path}`)
       }
     }
 

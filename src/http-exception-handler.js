@@ -10,15 +10,15 @@ const log = console.log
  function httpExceptionHandler(e, reporter) {
    const { response, code } = e
    if(!response) {
-     log(chalk`{bgRed ThirdParty} The request failed. Error Code: ${code}`)
-     return reporter.panic(`Plugin ThirdParty http request failed. Error Code: ${code}`, e)
+     log(chalk`{bgRed Plugin ApiServer} The request failed. Error Code: ${code}`)
+     return reporter.error(`Plugin ApiServer http request failed. Error Code: ${code}`, e)
    }
    const { status, statusText, data: { message } } = e.response
-   log(chalk`{bgRed ThirdParty} The server response was "${status} ${statusText}"`)
+   log(chalk`\n{bgRed Plugin ApiServer} The server response was "${status} ${statusText}"`)
    if (message) {
-     log(chalk`{bgRed ThirdParty} Inner exception message : "${message}"`)
+     log(chalk`{bgRed Plugin ApiServer} Inner exception message : "${message}"`)
   }
-  return reporter.panic(`Plugin ThirdParty http request failed. The server response was "${status} ${statusText}"`, e)
+  return reporter.error(`Plugin ApiServer http request failed. The server response was "${status} ${statusText}"`, e)
 }
 
 module.exports = httpExceptionHandler
