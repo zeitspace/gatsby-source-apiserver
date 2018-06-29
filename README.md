@@ -47,6 +47,17 @@ plugins: [
       // Nested level of entities in repsonse object, example: `data.posts`
       entityLevel: `data.posts`
 
+      // Define schemaType to normalize blank values
+      // example:
+      // const postType = {
+      //   id: 1,
+      //   name: 'String',
+      //   published: true,
+      //   object: {a: 1, b: '2', c: false},
+      //   array: [{a: 1, b: '2', c: false}]
+      // }
+      schemaType: postType
+
       // Simple authentication, if optional, set it null
       auth: {
         username: 'myusername',

@@ -24,6 +24,7 @@ exports.sourceNodes = async ({
   payloadKey,
   name,
   entityLevel,
+  schemaType,
   verboseOutput = false
 }) => {
   const { createNode } = boundActionCreators;
@@ -66,7 +67,7 @@ exports.sourceNodes = async ({
   entities = normalize.createGatsbyIds(createNodeId, idField, entities, reporter)
 
   // Generate the nodes
-  normalize.createNodesFromEntities({entities, createNode, reporter})
+  normalize.createNodesFromEntities({entities, schemaType, createNode, reporter})
 
   // We're done, return.
   return

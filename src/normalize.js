@@ -23,11 +23,21 @@ const conflictFieldPrefix = `alternative_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 // Create nodes from entities
-exports.createNodesFromEntities = ({entities, createNode, reporter}) => {
+exports.createNodesFromEntities = ({entities, schemaType, createNode, reporter}) => {
   entities.forEach(e => {
     // console.log(`e: ${JSON.stringify(e)}`);
-    let { __type, ...entity } = e
     // console.log(`entity: `, entity);
+    let { __type, ...entity } = e
+
+    if (schemaType) {
+      const fieldNames = Object.keys(entity)
+      fieldNames.forEach(fieldName => {
+        if (typeof entity[fieldName] === `undefined` || entity[fieldName] === null) {
+          entity[fieldName] = setBlankValue(schemaType[fieldName])
+        }
+      })
+    }
+
     let node = {
       ...entity,
       parent: null,
@@ -41,6 +51,25 @@ exports.createNodesFromEntities = ({entities, createNode, reporter}) => {
     // console.log(`node: `, node);
     createNode(node);
   })
+}
+
+// If entry is not set by user, provide an empty value of the same type
+const setBlankValue = shemaValue => {
+  if (typeof shemaValue === 'string') {
+    return ``
+  } else if (typeof shemaValue === 'number') {
+    return NaN
+  } else if (typeof shemaValue === 'object' && !Array.isArray(shemaValue)) {
+    const obj = {}
+    Object.keys(shemaValue).forEach(itemName => {
+      obj[itemName] = setBlankValue(shemaValue[itemName])
+    })
+    return obj
+  } else if (typeof shemaValue === 'object' && Array.isArray(shemaValue)) {
+    return [setBlankValue(shemaValue[0])]
+  } else if (typeof shemaValue === 'boolean') {
+    return false
+  }
 }
 
 /**
