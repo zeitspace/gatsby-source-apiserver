@@ -97,6 +97,16 @@ Data will be available at the following points in GraphQL.
 `all<TypePrefix><Name>` or `<TypePrefix><Name>` where `TypePrefix` and `Name` is replaced by the name entered in the
 configuration options.
 
+## Dummy Node
+
+If the API server return the empty array, this plugin will create the dummy node for initialize Gatsby Graphql Schema (for handling graphql error when it build). The dummy node will have field `id: 'dummy'`:
+
+```
+egdes.node.id === 'dummy'
+```
+
+Note: make sure you pass option `schemaType` to make dummy node works.
+
 ### Conflicting keys
 
 Some of the returned keys may be transformed if they conflict with restricted keys used for

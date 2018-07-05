@@ -24,6 +24,25 @@ const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 // Create nodes from entities
 exports.createNodesFromEntities = ({entities, schemaType, createNode, reporter}) => {
+  if (entities.length === 0) {
+    const e = {
+      id: 'dummy',
+      __type: 'internalProperties',
+      ...schemaType
+    }
+    let { __type, ...entity } = e
+    return createNode({
+      ...entity,
+      parent: null,
+      children: [],
+      mediaType: 'application/json',
+      internal: {
+        type: e.__type,
+        contentDigest: digest(JSON.stringify(e))
+      }
+    })
+  }
+
   entities.forEach(e => {
     // console.log(`e: ${JSON.stringify(e)}`);
     // console.log(`entity: `, entity);
