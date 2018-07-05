@@ -23,37 +23,23 @@ const conflictFieldPrefix = `alternative_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 // Create nodes from entities
-exports.createNodesFromEntities = ({entities, schemaType, createNode, reporter}) => {
-  if (entities.length === 0) {
-    const e = {
-      id: 'dummy',
-      __type: 'internalProperties',
-      ...schemaType
-    }
-    let { __type, ...entity } = e
-    return createNode({
-      ...entity,
-      parent: null,
-      children: [],
-      mediaType: 'application/json',
-      internal: {
-        type: e.__type,
-        contentDigest: digest(JSON.stringify(e))
-      }
-    })
+exports.createNodesFromEntities = ({entities, entityType, schemaType, createNode, reporter}) => {
+  const dummyEntity = {
+    id: 'dummy',
+    __type: entityType,
+    ...schemaType
   }
+  entities.push(dummyEntity)
 
   entities.forEach(e => {
-    // console.log(`e: ${JSON.stringify(e)}`);
-    // console.log(`entity: `, entity);
     let { __type, ...entity } = e
 
-    if (schemaType) {
-      const fieldNames = Object.keys(entity)
-      fieldNames.forEach(fieldName => {
-        entity[fieldName] = setBlankValue(schemaType[fieldName], entity[fieldName])
-      })
-    }
+    // if (schemaType) {
+    //   const fieldNames = Object.keys(entity)
+    //   fieldNames.forEach(fieldName => {
+    //     entity[fieldName] = setBlankValue(schemaType[fieldName], entity[fieldName])
+    //   })
+    // }
 
     let node = {
       ...entity,
@@ -83,6 +69,7 @@ const setBlankValue = (shemaValue, fieldValue) => {
     })
     return obj
   } else if (typeof shemaValue === 'object' && Array.isArray(shemaValue)) {
+    // TODO: Need to fix it
     return [setBlankValue(shemaValue[0])]
   } else if (typeof shemaValue === 'boolean') {
     return typeof fieldValue === `undefined` || fieldValue === null ? false : fieldValue

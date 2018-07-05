@@ -67,7 +67,7 @@ exports.sourceNodes = async ({
   entities = normalize.createGatsbyIds(createNodeId, idField, entities, reporter)
 
   // Generate the nodes
-  normalize.createNodesFromEntities({entities, schemaType, createNode, reporter})
+  normalize.createNodesFromEntities({entities, entityType, schemaType, createNode, reporter})
 
   // We're done, return.
   return

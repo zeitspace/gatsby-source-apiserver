@@ -99,7 +99,7 @@ configuration options.
 
 ## Dummy Node
 
-If the API server return the empty array, this plugin will create the dummy node for initialize Gatsby Graphql Schema (for handling graphql error when it build). The dummy node will have field `id: 'dummy'`:
+This plugin will automatically add the dummy node for initialize Gatsby Graphql Schema (for handling graphql error if some field is missing). The dummy node will have field `id: 'dummy'`, you should exclude dummy node from `createPage()`
 
 ```
 egdes.node.id === 'dummy'
