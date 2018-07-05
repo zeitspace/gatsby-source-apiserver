@@ -32,9 +32,7 @@ exports.createNodesFromEntities = ({entities, schemaType, createNode, reporter})
     if (schemaType) {
       const fieldNames = Object.keys(entity)
       fieldNames.forEach(fieldName => {
-        if (typeof entity[fieldName] === `undefined` || entity[fieldName] === null) {
-          entity[fieldName] = setBlankValue(schemaType[fieldName])
-        }
+        entity[fieldName] = setBlankValue(schemaType[fieldName], entity[fieldName])
       })
     }
 
@@ -54,13 +52,13 @@ exports.createNodesFromEntities = ({entities, schemaType, createNode, reporter})
 }
 
 // If entry is not set by user, provide an empty value of the same type
-const setBlankValue = shemaValue => {
+const setBlankValue = (shemaValue, fieldValue) => {
   if (typeof shemaValue === 'string') {
-    return ``
+    return typeof fieldValue === `undefined` || fieldValue === null ? '' : fieldValue
   } else if (typeof shemaValue === 'number') {
-    return NaN
+    return typeof fieldValue === `undefined` || fieldValue === null ? NaN : fieldValue
   } else if (typeof shemaValue === 'object' && !Array.isArray(shemaValue)) {
-    const obj = {}
+    const obj = typeof fieldValue === `undefined` || fieldValue === null ? {} : fieldValue
     Object.keys(shemaValue).forEach(itemName => {
       obj[itemName] = setBlankValue(shemaValue[itemName])
     })
@@ -68,7 +66,9 @@ const setBlankValue = shemaValue => {
   } else if (typeof shemaValue === 'object' && Array.isArray(shemaValue)) {
     return [setBlankValue(shemaValue[0])]
   } else if (typeof shemaValue === 'boolean') {
-    return false
+    return typeof fieldValue === `undefined` || fieldValue === null ? false : fieldValue
+  } else {
+    return fieldValue
   }
 }
 
