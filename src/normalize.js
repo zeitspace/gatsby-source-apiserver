@@ -91,7 +91,7 @@ function getValidKey({ key, verbose = false }) {
   // Replace invalid characters
   if (!NAME_RX.test(nkey)) {
     changed = true
-    nkey = nkey.replace(/-|__|:|\.|\s/g, `_`)
+    nkey = nkey.replace(/-|__|:|\$|\.|\s/g, '_');
   }
   // Prefix if first character isn't a letter.
   if (!NAME_RX.test(nkey.slice(0, 1))) {
@@ -100,7 +100,7 @@ function getValidKey({ key, verbose = false }) {
   }
   if (restrictedNodeFields.includes(nkey)) {
     changed = true
-    nkey = `${conflictFieldPrefix}${nkey}`.replace(/-|__|:|\.|\s/g, `_`)
+    nkey = `${conflictFieldPrefix}${nkey}`.replace(/-|__|:|\$|\.|\s/g, '_');
   }
   if (changed && verbose)
     log(chalk`{bgCyan Plugin ApiServer} Object with key "${key}" breaks GraphQL naming convention. Renamed to "${nkey}"`)
