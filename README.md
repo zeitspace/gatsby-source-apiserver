@@ -44,8 +44,8 @@ plugins: [
       // using this name. i.e. posts.json
       name: `posts`,
 
-      // Nested level of entities in repsonse object, example: `data.posts`
-      entityLevel: `data.posts`
+      // Nested level of entities in response object, example: `data.posts`
+      entityLevel: `data.posts`,
 
       // Define schemaType to normalize blank values
       // example:
@@ -56,7 +56,7 @@ plugins: [
       //   object: {a: 1, b: '2', c: false},
       //   array: [{a: 1, b: '2', c: false}]
       // }
-      schemaType: postType
+      schemaType: postType,
 
       // Simple authentication, if optional, set it null
       auth: {
