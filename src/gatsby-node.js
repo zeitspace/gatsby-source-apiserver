@@ -57,17 +57,14 @@ exports.sourceNodes = async ({
     return
   }
 
-  // Standardize and clean keys
-  entities = normalize.standardizeKeys(entities)
-
-  // Add entity type to each entity
-  entities = normalize.createEntityType(entityType, entities)
-
-  // Create a unique id for gatsby
-  entities = normalize.createGatsbyIds(createNodeId, idField, entities, reporter)
-
   // Generate the nodes
-  normalize.createNodesFromEntities({entities, entityType, schemaType, createNode, reporter})
+  normalize.createNodesFromEntities({
+      entities,
+      entityType,
+      schemaType,
+      createNode,
+      createNodeId,
+      reporter})
 
   // We're done, return.
   return
