@@ -44,8 +44,8 @@ plugins: [
       // using this name. i.e. posts.json
       name: `posts`,
 
-      // Nested level of entities in repsonse object, example: `data.posts`
-      entityLevel: `data.posts`
+      // Nested level of entities in response object, example: `data.posts`
+      entityLevel: `data.posts`,
 
       // Define schemaType to normalize blank values
       // example:
@@ -56,7 +56,7 @@ plugins: [
       //   object: {a: 1, b: '2', c: false},
       //   array: [{a: 1, b: '2', c: false}]
       // }
-      schemaType: postType
+      schemaType: postType,
 
       // Simple authentication, if optional, set it null
       auth: {
@@ -74,7 +74,7 @@ plugins: [
 
       //  Required folder path where the data should be saved if using localSave option
       //  This folder must already exist
-      path: `${__dirname}/src/data/auth/`
+      path: `${__dirname}/src/data/auth/`,
 
       // Optionally include some output when building
       // Default is false
