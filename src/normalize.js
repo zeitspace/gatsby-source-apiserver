@@ -23,7 +23,14 @@ const conflictFieldPrefix = `alternative_`
 const restrictedNodeFields = [`id`, `children`, `parent`, `fields`, `internal`]
 
 // Create nodes from entities
-exports.createNodesFromEntities = ({entities, entityType, schemaType, createNode, reporter}) => {
+exports.createNodesFromEntities = ({entities, entityType, schemaType, createNode, createNodeId, reporter}) => {
+
+  // Standardize and clean keys
+  entities = standardizeKeys(entities)
+
+  // Add entity type to each entity
+  entities = createEntityType(entityType, entities)
+
   const dummyEntity = {
     id: 'dummy',
     __type: entityType,
@@ -32,7 +39,7 @@ exports.createNodesFromEntities = ({entities, entityType, schemaType, createNode
   entities.push(dummyEntity)
 
   entities.forEach(e => {
-    let { __type, ...entity } = e
+    const { __type, ...entity } = e
 
     // if (schemaType) {
     //   const fieldNames = Object.keys(entity)
@@ -41,14 +48,15 @@ exports.createNodesFromEntities = ({entities, entityType, schemaType, createNode
     //   })
     // }
 
-    let node = {
+    const node = {
       ...entity,
+      id: createGatsbyId(createNodeId),
       parent: null,
       children: [],
       mediaType: 'application/json',
       internal: {
-        type: e.__type,
-        contentDigest: digest(JSON.stringify(e))
+        type: __type,
+        contentDigest: digest(JSON.stringify(entity))
       }
     };
     // console.log(`node: `, node);
@@ -111,7 +119,7 @@ function getValidKey({ key, verbose = false }) {
 exports.getValidKey = getValidKey
 
 // Standardize ids + make sure keys are valid.
-exports.standardizeKeys = entities =>
+const standardizeKeys = entities =>
   entities.map(e =>
     deepMapKeys(
       e,
@@ -119,16 +127,12 @@ exports.standardizeKeys = entities =>
     )
 )
 
-
 // Generate a unique id for each entity
-exports.createGatsbyIds = (createNodeId, idField, entities, reporter) =>
-  entities.map(e => {
-    e.id = createNodeId(`${nanoid()}`)
-    return e
-})
+const createGatsbyId = (createNodeId) =>
+  createNodeId(`${nanoid()}`)
 
 // Add entity type to each entity
-exports.createEntityType = (entityType, entities) =>
+const createEntityType = (entityType, entities) =>
   entities.map(e => {
     e.__type = entityType
     return e
