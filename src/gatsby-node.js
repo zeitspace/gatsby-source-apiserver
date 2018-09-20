@@ -1,3 +1,5 @@
+require('babel-polyfill')
+
 const crypto = require(`crypto`)
 const stringify = require(`json-stringify-safe`)
 const fetch = require(`./fetch`)
