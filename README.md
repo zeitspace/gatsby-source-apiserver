@@ -68,10 +68,32 @@ plugins: [
       // }
       schemaType: postType,
 
+      //Request parameters
+      params: {
+        requestParameters: ['some', 'request', 'parameters']
+      },
+
       // Simple authentication, if optional, set it null
       auth: {
         username: 'myusername',
         password: 'supersecretpassword1234'
+      },
+
+      // Advanced authentication for Auth0
+      auth0Config: {
+        method: 'POST',
+        url: 'https://MyAuth0Domain/oauth/token',
+        headers: { 'content-type': 'application/json' },
+        data: { 
+          grant_type: 'password',
+          username: 'myusername',
+          password: 'PassAWordHere',
+          audience: 'Auth0APIAudience',
+          scope: 'openid',
+          client_id: 'AUTH0_CLIENT_ID',
+          client_secret: 'AUTH0_SECRET'
+        },
+        json: true
       },
 
       // Optional payload key name if your api returns your payload in a different key
