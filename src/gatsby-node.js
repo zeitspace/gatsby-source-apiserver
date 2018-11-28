@@ -6,6 +6,7 @@ const _ = require('lodash')
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 const objectRef = require(`./helpers`).objectRef
+const forEachAsync = require('./helpers').forEachAsync
 
 // const typePrefix = `thirdParty__`
 
@@ -36,7 +37,7 @@ exports.sourceNodes = async ({
   // If true, output some info as the plugin runs
   let verbose = verboseOutput
 
-  entitiesArray.forEach(async (entity) => {
+  await forEachAsync(entitiesArray, async (entity) => {
 
     // default to the general properties for any props not provided
     const _typePrefix = entity.typePrefix ? entity.typePrefix : typePrefix
