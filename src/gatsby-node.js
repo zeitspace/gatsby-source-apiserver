@@ -23,10 +23,12 @@ exports.sourceNodes = async ({
   skipCreateNode = false,
   path,
   auth = {},
+  auth0Config = {},
   payloadKey,
   name,
   entityLevel,
   schemaType,
+  params = {},
   verboseOutput = false
 }) => {
   const { createNode } = boundActionCreators;
@@ -39,7 +41,7 @@ exports.sourceNodes = async ({
   // console.log(`entityType: ${entityType}`);
 
   // Fetch the data
-  let entities = await fetch({url, method, headers, data, name, localSave, path, payloadKey, auth, verbose, reporter})
+  let entities = await fetch({url, method, headers, data, name, localSave, path, payloadKey, auth, auth0Config, params, verbose, reporter})
 
   // Interpolate entities from nested resposne
   if (entityLevel) {
