@@ -33,6 +33,16 @@ plugins: [
   {
     resolve: 'gatsby-source-apiserver',
     options: {
+      // Pass an array containing any number of the entity configuration properties (except verbose),
+      // any not specified are defaulted to the general properties that are specified 
+      entitiesArray: [{
+        url: `http://yourapi.com/api/v1/posts`,
+        method: 'post',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        name: `posts`,
+      }]
       // Type prefix of entities from server
       typePrefix: 'internal__',
 
