@@ -25,20 +25,6 @@ async function fetch({
 
   // Attempt to download the data from api
   try {
-    if(auth0Config) {
-      console.time('\nAuthenticate user');
-      // Make API request.
-      try {
-        const loginResponse = await axios(auth0Config);
-
-        if (loginResponse.hasOwnProperty('data')) {
-          headers.Authorization = 'Bearer ' + loginResponse.data.id_token;
-        }
-      } catch (error) {
-        console.error('\nEncountered authentication error: ' + error);
-      }
-      console.timeEnd('\nAuthenticate user');
-    }
     let options = {
       method: method,
       url: url,
