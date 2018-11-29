@@ -33,7 +33,7 @@ plugins: [
   {
     resolve: 'gatsby-source-apiserver',
     options: {
-      // Pass an array containing any number of the entity configuration properties (except verbose),
+      // Pass an array containing any number of the entity configuration properties (except verbose, auth0Config),
       // any not specified are defaulted to the general properties that are specified 
       entitiesArray: [{
         url: `http://yourapi.com/api/v1/posts`,

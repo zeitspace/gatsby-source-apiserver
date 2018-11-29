@@ -1,8 +1,5 @@
 require('babel-polyfill')
 
-const crypto = require(`crypto`)
-const stringify = require(`json-stringify-safe`)
-const _ = require('lodash')
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 const objectRef = require(`./helpers`).objectRef
@@ -18,9 +15,8 @@ exports.sourceNodes = async ({
   typePrefix,
   url,
   method,
-  headers,
+  headers = {},
   data,
-  idField = `id`,
   localSave = false,
   skipCreateNode = false,
   path,
@@ -39,6 +35,22 @@ exports.sourceNodes = async ({
   // If true, output some info as the plugin runs
   let verbose = verboseOutput
 
+  let authorization
+  if(auth0Config) {
+    console.time('\nAuthenticate user');
+    // Make API request.
+    try {
+      const loginResponse = await axios(auth0Config);
+
+      if (loginResponse.hasOwnProperty('data')) {
+        authorization = 'Bearer ' + loginResponse.data.id_token;
+      }
+    } catch (error) {
+      console.error('\nEncountered authentication error: ' + error);
+    }
+    console.timeEnd('\nAuthenticate user');
+  }
+
   await forEachAsync(entitiesArray, async (entity) => {
 
     // default to the general properties for any props not provided
@@ -51,18 +63,19 @@ exports.sourceNodes = async ({
     const _skipCreateNode = entity.skipCreateNode ? entity.skipCreateNode : skipCreateNode
     const _path = entity.path ? entity.path : path
     const _auth = entity.auth ? entity.auth : auth
-    const _auth0Config = entity.auth0Config ? entity.auth0Config : auth0Config
+    const _params = entity.params ? entity.params : params
     const _payloadKey = entity.payloadKey ? entity.payloadKey : payloadKey
     const _name = entity.name ? entity.name : name
     const _entityLevel = entity.entityLevel ? entity.entityLevel : entityLevel 
     const _schemaType = entity.schemaType ? entity.schemaType : schemaType
 
+    if (authorization) _headers.Authorization = authorization
     // Create an entity type from prefix and name supplied by user
     let entityType = `${_typePrefix}${_name}`
     // console.log(`entityType: ${entityType}`);
 
     // Fetch the data
-    let entities = await fetch({_url, _method, _headers, _data, _name, _localSave, _path, _payloadKey, _auth, _auth0config, _params, verbose, reporter})
+    let entities = await fetch({_url, _method, _headers, _data, _name, _localSave, _path, _payloadKey, _auth, _params, verbose, reporter})
 
     // Interpolate entities from nested resposne
     if (_entityLevel) {
