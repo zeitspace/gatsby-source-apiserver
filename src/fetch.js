@@ -6,17 +6,16 @@ const chalk = require('chalk')
 const log = console.log
 
 async function fetch({
-  url,
-  method,
-  headers,
-  data,
-  name,
-  localSave,
-  path,
-  payloadKey,
-  auth,
-  auth0Config,
-  params,
+  _url,
+  _method,
+  _headers,
+  _data,
+  _name,
+  _localSave,
+  _path,
+  _payloadKey,
+  _auth,
+  _params,
   verbose,
   reporter
 }) {
@@ -26,14 +25,14 @@ async function fetch({
   // Attempt to download the data from api
   try {
     let options = {
-      method: method,
-      url: url,
-      headers: headers,
-      data: data,
-      params: params
+      method: _method,
+      url: _url,
+      headers: _headers,
+      data: _data,
+      params: _params
     }
-    if(auth) {
-      options.auth = auth
+    if(_auth) {
+      options.auth = _auth
     }
     allRoutes = await axios(options)
   } catch (e) {
@@ -45,21 +44,21 @@ async function fetch({
     // console.log(`allRoutes: `, allRoutes.data);
 
     // Create a local save of the json data in the user selected path
-    if(localSave) {
+    if(_localSave) {
       try {
-        fs.writeFileSync(`${path}${name}.json`, stringify(allRoutes.data, null, 2))
+        fs.writeFileSync(`${_path}${_name}.json`, stringify(allRoutes.data, null, 2))
       } catch(err) {
         reporter.panic(`Plugin ApiServer could not save the file.  Please make sure the folder structure is already in place.`, err)
       }
 
       if(verbose) {
-        log(chalk`{bgCyan Plugin ApiServer} ${name}.json was saved locally to ${path}`)
+        log(chalk`{bgCyan Plugin ApiServer} ${_name}.json was saved locally to ${_path}`)
       }
     }
 
     // Return just the intended data
-    if(payloadKey) {
-      return allRoutes.data[payloadKey]
+    if(_payloadKey) {
+      return allRoutes.data[_payloadKey]
     }
     return allRoutes.data
   }
