@@ -1,5 +1,6 @@
 require('babel-polyfill')
 
+const axios = require('axios')
 const fetch = require(`./fetch`)
 const normalize = require(`./normalize`)
 const objectRef = require(`./helpers`).objectRef
