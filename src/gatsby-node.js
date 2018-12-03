@@ -55,32 +55,32 @@ exports.sourceNodes = async ({
   await forEachAsync(entitiesArray, async (entity) => {
 
     // default to the general properties for any props not provided
-    const _typePrefix = entity.typePrefix ? entity.typePrefix : typePrefix
-    const _url = entity.url ? entity.url : url
-    const _method = entity.method ? entity.method : method
-    const _headers = entity.headers ? entity.headers : headers
-    const _data = entity.data ? entity.data : data
-    const _localSave = entity.localSave ? entity.localSave : localSave
-    const _skipCreateNode = entity.skipCreateNode ? entity.skipCreateNode : skipCreateNode
-    const _path = entity.path ? entity.path : path
-    const _auth = entity.auth ? entity.auth : auth
-    const _params = entity.params ? entity.params : params
-    const _payloadKey = entity.payloadKey ? entity.payloadKey : payloadKey
-    const _name = entity.name ? entity.name : name
-    const _entityLevel = entity.entityLevel ? entity.entityLevel : entityLevel 
-    const _schemaType = entity.schemaType ? entity.schemaType : schemaType
+    const typePrefix = entity.typePrefix ? entity.typePrefix : typePrefix
+    const url = entity.url ? entity.url : url
+    const method = entity.method ? entity.method : method
+    const headers = entity.headers ? entity.headers : headers
+    const data = entity.data ? entity.data : data
+    const localSave = entity.localSave ? entity.localSave : localSave
+    const skipCreateNode = entity.skipCreateNode ? entity.skipCreateNode : skipCreateNode
+    const path = entity.path ? entity.path : path
+    const auth = entity.auth ? entity.auth : auth
+    const params = entity.params ? entity.params : params
+    const payloadKey = entity.payloadKey ? entity.payloadKey : payloadKey
+    const name = entity.name ? entity.name : name
+    const entityLevel = entity.entityLevel ? entity.entityLevel : entityLevel 
+    const schemaType = entity.schemaType ? entity.schemaType : schemaType
 
-    if (authorization) _headers.Authorization = authorization
+    if (authorization) headers.Authorization = authorization
     // Create an entity type from prefix and name supplied by user
-    let entityType = `${_typePrefix}${_name}`
+    let entityType = `${typePrefix}${name}`
     // console.log(`entityType: ${entityType}`);
 
     // Fetch the data
-    let entities = await fetch({_url, _method, _headers, _data, _name, _localSave, _path, _payloadKey, _auth, _params, verbose, reporter})
+    let entities = await fetch({url, method, headers, data, name, localSave, path, payloadKey, auth, params, verbose, reporter})
 
     // Interpolate entities from nested resposne
-    if (_entityLevel) {
-      entities = objectRef(entities, _entityLevel)
+    if (entityLevel) {
+      entities = objectRef(entities, entityLevel)
     }
 
     // If entities is a single object, add to array to prevent issues with creating nodes
@@ -92,7 +92,7 @@ exports.sourceNodes = async ({
     // console.log(`entities: `, entities.data);
 
     // Skip node creation if the goal is to only download the data to json files
-    if(_skipCreateNode) {
+    if(skipCreateNode) {
       return
     }
 
@@ -100,7 +100,7 @@ exports.sourceNodes = async ({
     normalize.createNodesFromEntities({
         entities,
         entityType,
-        _schemaType,
+        schemaType,
         createNode,
         createNodeId,
         reporter})
