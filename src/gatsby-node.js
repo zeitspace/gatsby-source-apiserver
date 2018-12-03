@@ -31,6 +31,8 @@ exports.sourceNodes = async ({
   params = {},
   verboseOutput = false
 }) => {
+  //store the attributes in an object to avoid naming conflicts
+  const attributes = {typePrefix, url, method, headers, data, localSave, skipCreateNode, path, auth, params, payloadKey, name, entityLevel, schemaType}
   const { createNode } = boundActionCreators;
 
   // If true, output some info as the plugin runs
@@ -55,20 +57,21 @@ exports.sourceNodes = async ({
   await forEachAsync(entitiesArray, async (entity) => {
 
     // default to the general properties for any props not provided
-    const typePrefix = entity.typePrefix ? entity.typePrefix : typePrefix
-    const url = entity.url ? entity.url : url
-    const method = entity.method ? entity.method : method
-    const headers = entity.headers ? entity.headers : headers
-    const data = entity.data ? entity.data : data
-    const localSave = entity.localSave ? entity.localSave : localSave
-    const skipCreateNode = entity.skipCreateNode ? entity.skipCreateNode : skipCreateNode
-    const path = entity.path ? entity.path : path
-    const auth = entity.auth ? entity.auth : auth
-    const params = entity.params ? entity.params : params
-    const payloadKey = entity.payloadKey ? entity.payloadKey : payloadKey
-    const name = entity.name ? entity.name : name
-    const entityLevel = entity.entityLevel ? entity.entityLevel : entityLevel 
-    const schemaType = entity.schemaType ? entity.schemaType : schemaType
+
+    const typePrefix = entity.typePrefix ? entity.typePrefix : attributes.typePrefix
+    const url = entity.url ? entity.url : attributes.url
+    const method = entity.method ? entity.method : attributes.method
+    const headers = entity.headers ? entity.headers : attributes.headers
+    const data = entity.data ? entity.data : attributes.data
+    const localSave = entity.localSave ? entity.localSave : attributes.localSave
+    const skipCreateNode = entity.skipCreateNode ? entity.skipCreateNode : attributes.skipCreateNode
+    const path = entity.path ? entity.path : attributes.path
+    const auth = entity.auth ? entity.auth : attributes.auth
+    const params = entity.params ? entity.params : attributes.params
+    const payloadKey = entity.payloadKey ? entity.payloadKey : attributes.payloadKey
+    const name = entity.name ? entity.name : attributes.name
+    const entityLevel = entity.entityLevel ? entity.entityLevel : attributes.entityLevel 
+    const schemaType = entity.schemaType ? entity.schemaType : attributes.schemaType
 
     if (authorization) headers.Authorization = authorization
     // Create an entity type from prefix and name supplied by user
